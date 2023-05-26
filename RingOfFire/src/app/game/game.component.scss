@@ -4,4 +4,50 @@
     max-width: 100%;
     background-image: url('/assets/img/board.jpg');
     background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-stack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+
+    img {
+        position: absolute;
+        width: 150px;
+    }
+}
+
+.top-card {
+    cursor: pointer;
+    transition: all 225ms ease-in-out;
+
+    &:hover {
+        transform: scale(1.1) translateY(-10px);
+    }
+}
+
+.pick-card {
+    animation: pick-card-animation 1.2s ease-in-out;
+    transform: scale(1.2) translateX(180px) translateY(-200px) rotate(30deg);
+}
+
+@keyframes pick-card-animation {
+    0% {
+        transform: scale(1);
+    }
+    20%{
+        transform: scale(1.7);
+    }
+    50%{
+        transform: scale(1.7);
+    }
+    100%{
+        transform: scale(1.2) translateX(180px) translateY(-200px) rotate(30deg);
+    }
 }
