@@ -9,5 +9,6 @@ import { Game } from 'src/modules/game';
 export class PlayerComponent extends Game{
 
   @Input() name: any;
+  @Input() playerActive:boolean = false;
 
 }

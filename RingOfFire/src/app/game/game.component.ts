@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Game } from 'src/modules/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-game',
@@ -32,6 +33,7 @@ export class GameComponent {
       setTimeout(() => {
         this.game.playedCards.push(this.currentCard!);
         this.pickCardAnimation = false;
+        this.showActivePlayer();
       }, 1200);
     }
   }
@@ -39,8 +41,23 @@ export class GameComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((name: string) => {
+      this.game.players.push(name);
     });
   }
+
+  currentPlayer() {
+    return this.game.currentPlayer
+  }
+
+  SumofPlayers() {
+    return this.game.players.length
+  }
+
+  showActivePlayer() {
+    this.game.currentPlayer++;
+    if (this.currentPlayer() >= this.SumofPlayers()) { this.game.currentPlayer = 0; } 
+  }
 }
+
+
