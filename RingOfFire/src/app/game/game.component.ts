@@ -3,6 +3,9 @@ import { Game } from 'src/modules/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
+import { inject } from '@angular/core';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -14,10 +17,19 @@ export class GameComponent {
   pickCardAnimation = false;
   currentCard: string | undefined;
   game: Game = new Game;
+  test: Array<any> | undefined;
+
+  firestore: Firestore = inject(Firestore);
+  items$: Observable<any> | undefined;
 
   constructor(public dialog: MatDialog) { }
   ngOnInit() {
     this.newGame();
+    const aCollection = collection(this.firestore, 'games');
+    this.items$ = collectionData(aCollection);
+    this.items$.subscribe((newTests) => {
+      this.test = newTests;
+    });
   }
 
   newGame() {
