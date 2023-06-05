@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ringoffire-fbe60": {
+      "hosting": {
+        "RingOfFire": [
+          "ringoffire-fbe60"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ringoffire-fbe60"
+  }
+}
