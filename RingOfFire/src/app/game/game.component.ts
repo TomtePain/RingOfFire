@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/modules/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-import { getMatFormFieldDuplicatedHintError } from '@angular/material/form-field';
 import { inject } from '@angular/core';
 import { Firestore, collection, collectionData, setDoc, doc, deleteDoc, addDoc, getFirestore, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { initializeApp } from 'firebase/app';
-import { environment } from 'src/environments/environment';
+
 
 
 @Component({
@@ -19,13 +17,13 @@ import { environment } from 'src/environments/environment';
 
 export class GameComponent implements OnInit {
   game: Game = new Game;
-  test: Array<any> | undefined;
+  test: Array<any> | any;
   gameID: string | any;
 
   firestore: Firestore = inject(Firestore);
   items$: Observable<any> | undefined;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog,) { }  //private firestore: Firestore
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }  //private firestore: Firestore
 
   ngOnInit() {
     this.newGame();
@@ -38,12 +36,21 @@ export class GameComponent implements OnInit {
       this.items$ = collectionData(aCollection, this.gameID);
       this.items$.subscribe((newGame: any) => {
         this.test = newGame;
-        this.game.currentPlayer = this.test![0].currentPlayer;
-        this.game.playedCards = this.test![0].playedCards;
-        this.game.players = this.test![0].players;
-        this.game.stack = this.test![0].stack;
-        this.game.pickCardAnimation = this.test![0].pickCardAnimation;
-        this.game.currentCard = this.test![0].currentCard;
+        console.log('this is newgame:', newGame)
+        for (let i = 0; i < newGame.length; i++) {
+          this.game.currentPlayer = newGame[i].currentPlayer;
+          this.game.playedCards = newGame[i].playedCards;
+          this.game.players = newGame[i].players;
+          this.game.stack = newGame[i].stack;
+          this.game.pickCardAnimation = newGame[i].pickCardAnimation;
+          this.game.currentCard = newGame[i].currentCard;
+        }
+        // this.game.currentPlayer = newGame[i].currentPlayer;  
+        // this.game.playedCards = newGame[i].playedCards;
+        // this.game.players = newGame[i].players;
+        // this.game.stack = newGame[i].stack;
+        // this.game.pickCardAnimation = newGame[i].pickCardAnimation;
+        // this.game.currentCard = newGame[i].currentCard;
       });
 
     })
@@ -83,7 +90,7 @@ export class GameComponent implements OnInit {
   async saveGame() {
     const aCollection = doc(this.firestore, 'games', this.gameID);
     let newGameJSON = this.game.toJSON();
-    await updateDoc( aCollection, newGameJSON );
+    await updateDoc(aCollection, newGameJSON);
   }
 
   currentPlayer() {
