@@ -3,7 +3,7 @@ import { Game } from 'src/modules/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { inject } from '@angular/core';
-import { Firestore, collection, collectionData, setDoc, doc, deleteDoc, addDoc, getFirestore, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, setDoc, doc, deleteDoc, addDoc, getFirestore, updateDoc, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -23,38 +23,28 @@ export class GameComponent implements OnInit {
   firestore: Firestore = inject(Firestore);
   items$: Observable<any> | undefined;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }  //private firestore: Firestore
-
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { } 
   ngOnInit() {
     this.newGame();
+
+
     this.route.params.subscribe((params) => {
       console.log(params['id']);
       this.gameID = params['id'];
 
-
       const aCollection = collection(this.firestore, 'games');
-      this.items$ = collectionData(aCollection, this.gameID);
-      this.items$.subscribe((newGame: any) => {
-        this.test = newGame;
-        console.log('this is newgame:', newGame)
-        for (let i = 0; i < newGame.length; i++) {
-          this.game.currentPlayer = newGame[i].currentPlayer;
-          this.game.playedCards = newGame[i].playedCards;
-          this.game.players = newGame[i].players;
-          this.game.stack = newGame[i].stack;
-          this.game.pickCardAnimation = newGame[i].pickCardAnimation;
-          this.game.currentCard = newGame[i].currentCard;
-        }
-        // this.game.currentPlayer = newGame[i].currentPlayer;  
-        // this.game.playedCards = newGame[i].playedCards;
-        // this.game.players = newGame[i].players;
-        // this.game.stack = newGame[i].stack;
-        // this.game.pickCardAnimation = newGame[i].pickCardAnimation;
-        // this.game.currentCard = newGame[i].currentCard;
+      const gameDocRef = doc(aCollection, this.gameID);
+      console.log('this is gamedoc:', gameDocRef);
+
+      docData(gameDocRef).subscribe((newGame: any) => {
+        this.game.currentPlayer = newGame.currentPlayer;
+        this.game.playedCards = newGame.playedCards;
+        this.game.players = newGame.players;
+        this.game.stack = newGame.stack;
+        this.game.pickCardAnimation = newGame.pickCardAnimation;
+        this.game.currentCard = newGame.currentCard;
       });
-
     })
-
   }
 
   newGame() {
