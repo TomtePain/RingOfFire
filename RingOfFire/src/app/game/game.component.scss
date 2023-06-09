@@ -17,10 +17,21 @@
     height: 100%;
     position: relative;
 
+    @media (max-width: 720px) {
+        right: 40px;
+    }
+
     img {
         position: absolute;
         width: 150px;
+
+        @media (max-width: 950px) {
+            width: 100px;
+            bottom: 200px;
+        }
     }
+
+    
 }
 
 .top-card {
@@ -35,6 +46,11 @@
 .pick-card {
     animation: pick-card-animation 1.2s ease-in-out;
     transform: scale(1.2) translateX(180px) translateY(-200px) rotate(30deg);
+
+    @media (max-width: 950px) {
+        animation: pick-card-animation-mobile 1.2s ease-in-out;
+        transform: scale(1) translateX(-40px) translateY(-200px) rotate(30deg);
+    }
 }
 
 @keyframes pick-card-animation {
@@ -52,10 +68,29 @@
     }
 }
 
+@keyframes pick-card-animation-mobile {
+    0% {
+        transform: scale(1);
+    }
+    20%{
+        transform: scale(1.2);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1) translateX(-40px) translateY(-200px) rotate(30deg);
+    }
+}
+
 
 .played-cards {
     left: 25px;
     transform: scale(1.2) translateX(180px) translateY(-200px) rotate(30deg);
+
+    @media (max-width: 950px) {
+        transform: scale(1) translateX(-40px) translateY(-200px) rotate(30deg);
+    }
 }
 
 .player-position {
@@ -68,6 +103,12 @@
     position: absolute;
     right: 32px;
     bottom: 32px;
+    z-index: 1;
+
+    @media (max-width: 720px) {
+        right: 4px;
+        top: 4px;
+    }
 }
 
 .pin-bottom {
@@ -75,4 +116,10 @@
     bottom: 40px;
     left: 150px;
     right: 150px;
+
+    @media (max-width: 720px) {
+        left: 0;
+        right: 0;
+        bottom: 25px;
+    }
 }
