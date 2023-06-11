@@ -106,8 +106,8 @@
     z-index: 1;
 
     @media (max-width: 720px) {
-        right: 4px;
-        top: 4px;
+        left: 4px;
+        top: 100px;
     }
 }
 
@@ -121,5 +121,18 @@
         left: 0;
         right: 0;
         bottom: 25px;
+    }
+}
+
+.mobile-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    overflow-x: scroll;
+    height: 100px;
+    &::-webkit-scrollbar {
+        display: none;
     }
 }
