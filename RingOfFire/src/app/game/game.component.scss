@@ -136,3 +136,15 @@
         display: none;
     }
 }
+
+.gameOver {
+    position: absolute;
+    width: 90%;
+    object-fit: scale-down;
+    z-index: 3;
+
+    @media(max-width: 720px) {
+        height: 45%;
+        object-fit: cover;
+    }
+}

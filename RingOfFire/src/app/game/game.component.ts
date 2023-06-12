@@ -19,6 +19,7 @@ export class GameComponent implements OnInit {
   game: Game = new Game;
   test: Array<any> | any;
   gameID: string | any;
+  gameOver = false;
 
   firestore: Firestore = inject(Firestore);
   items$: Observable<any> | undefined;
@@ -51,7 +52,9 @@ export class GameComponent implements OnInit {
   }
 
   takeCard() {
-    if (!this.game.pickCardAnimation) {
+    if(this.game.stack.length == 0 ) {
+      this.gameOver = true;
+    }else if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
       this.saveGame();
@@ -75,6 +78,7 @@ export class GameComponent implements OnInit {
       };
     });
   }
+
 
   async saveGame() {
     const aCollection = doc(this.firestore, 'games', this.gameID);
