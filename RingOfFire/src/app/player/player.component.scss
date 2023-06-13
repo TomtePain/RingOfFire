@@ -5,8 +5,12 @@
     align-items: center;
     background-color: rgba(116, 0, 0, 0.6);
     border: 1px solid black;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    cursor: pointer;
+    &:hover {
+        filter: brightness(1.25);
+    }
 
     span {
         font-size: 22px;

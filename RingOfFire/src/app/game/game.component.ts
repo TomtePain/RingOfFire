@@ -6,6 +6,8 @@ import { inject } from '@angular/core';
 import { Firestore, collection, collectionData, setDoc, doc, deleteDoc, addDoc, getFirestore, updateDoc, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { PlayerComponent } from '../player/player.component';
+import { PlayerEditComponent } from '../player-edit/player-edit.component';
 
 
 
@@ -24,7 +26,7 @@ export class GameComponent implements OnInit {
   firestore: Firestore = inject(Firestore);
   items$: Observable<any> | undefined;
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog) { } 
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
   ngOnInit() {
     this.newGame();
 
@@ -43,6 +45,8 @@ export class GameComponent implements OnInit {
         this.game.stack = newGame.stack;
         this.game.pickCardAnimation = newGame.pickCardAnimation;
         this.game.currentCard = newGame.currentCard;
+        this.game.profil_images = newGame.profil_images;
+        this.game.player_images = newGame.player_images;
       });
     })
   }
@@ -52,9 +56,9 @@ export class GameComponent implements OnInit {
   }
 
   takeCard() {
-    if(this.game.stack.length == 0 ) {
+    if (this.game.stack.length == 0) {
       this.gameOver = true;
-    }else if (!this.game.pickCardAnimation) {
+    } else if (!this.game.pickCardAnimation) {
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
       this.saveGame();
@@ -74,11 +78,28 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.player_images.push('avatar.png');
         this.saveGame();
       };
     });
   }
 
+
+  editPlayer(playerId: number) {
+    const dialogRef = this.dialog.open(PlayerEditComponent);
+
+    dialogRef.afterClosed().subscribe((change: string) => {
+      if (change) {
+        if (change == 'DELETE') {
+          this.game.player_images.splice(playerId, 1);
+          this.game.players.splice(playerId, 1);
+        } else {
+          this.game.player_images[playerId] = change;
+        }
+        this.saveGame();
+      }
+    });
+  }
 
   async saveGame() {
     const aCollection = doc(this.firestore, 'games', this.gameID);

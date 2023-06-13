@@ -9,6 +9,7 @@ import { Game } from 'src/modules/game';
 export class PlayerMobileComponent extends Game {
 
   @Input() name: any;
-  @Input() playerActive:boolean = false;
+  @Input() image: any;
+  @Input() playerActive: boolean = false;
 
 }

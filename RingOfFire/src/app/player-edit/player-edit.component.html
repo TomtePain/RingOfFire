@@ -1,9 +1,10 @@
 <div mat-dialog-content>
     <p>Please Choose a Avatar for Your Player!</p>
+    <img [mat-dialog-close]="avatar" *ngFor="let avatar of images" class="profilImages" src="assets/img/profiles/{{ avatar }}" alt="">
 
     <div mat-dialog-actions>
         <button mat-button (click)="onNoClick()">No Thanks</button>
-        <button mat-button color="warn" [disabled]="" [mat-dialog-close]="" cdkFocusInitial>Delete Player</button>
+        <button mat-button color="warn" [mat-dialog-close]="'DELETE'" cdkFocusInitial>Delete Player</button>
     </div>
 
 

@@ -5,7 +5,8 @@ export class Game {
     public currentPlayer: number = 0;
     public pickCardAnimation = false;
     public currentCard: string | undefined;
-
+    public profil_images: string[] = ['Avatar_3.svg','AvatarBird01.svg','Female-Avatar-2.svg','Female-Avatar-3.svg','Female-Avatar-4.svg','Female-Avatar-5.svg','Male-Avatar-2.svg','Male-Avatar-3.svg','raphie_green_lanthern_smiley.svg'];
+    public player_images: string[] = [];
 
     constructor() {
         for (let i = 1; i < 14; i++) {
@@ -23,7 +24,9 @@ export class Game {
             playedCards: this.playedCards,
             currentPlayer: this.currentPlayer,
             pickCardAnimation: this.pickCardAnimation,
-            currentCard: this.currentCard || null
+            currentCard: this.currentCard || null,
+            profil_images: this.profil_images,
+            player_images: this.player_images
         };
     }
 

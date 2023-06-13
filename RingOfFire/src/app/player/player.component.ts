@@ -11,17 +11,16 @@ import { PlayerEditComponent } from '../player-edit/player-edit.component';
 export class PlayerComponent extends Game {
 
   @Input() name: any;
+  @Input() image: any;
   @Input() playerActive: boolean = false;
+  
+  
 
 
-  constructor(public dialog: MatDialog, ) {
+  constructor(public dialog: MatDialog) {
     super();
   } 
 
-
-  editPlayer() {
-    const dialogRef = this.dialog.open(PlayerEditComponent);
-  }
 }
 
 
